@@ -16,8 +16,7 @@ const Modal = {
 
 const Storage = {
     get() {
-        return JSON.parse(localStorage.getItem("dev.finances:transactions")) ||
-            []
+        return JSON.parse(localStorage.getItem("dev.finances:transactions")) || []
     },
 
     set(transactions) {
@@ -58,6 +57,7 @@ const Transaction = {
     },
 
     remove(index) {
+
         Transaction.all.splice(index, 1)
 
         App.reload()
@@ -93,13 +93,39 @@ const Transaction = {
     },
 
     total() {
+
         return Transaction.incomes() + Transaction.expenses();
+
     }
 }
 
 const DOM = {
     transactionsContainer: document.querySelector('#data-table tbody'),
 
+    wallpaperTransformation() {
+        var currentTime = new Date().getHours();
+        console.log(currentTime);
+        if (6 <= currentTime && currentTime < 8) {
+            document.querySelector('.wallpaper').classList.add('amanhecer');
+
+        } else if (8 >= currentTime && currentTime < 16) {
+            document.querySelector('.wallpaper').classList.add('dia');
+
+        } else if (16 >= currentTime && currentTime < 18) {
+            document.querySelector('.wallpaper').classList.add('por-do-sol');
+
+        } else if (18 >= currentTime && currentTime < 19) {
+            document.querySelector('.wallpaper').classList.add('anoitecer');
+
+        } else if (19 <= currentTime && currentTime < 23) {
+            document.querySelector('.wallpaper').classList.add('noite');
+
+        } else if (0 <= currentTime && currentTime < 6) {
+            document.querySelector('.wallpaper').classList.add('noite');
+
+        }
+
+    },
     addTransaction(transaction, index) {
         const tr = document.createElement('tr')
         tr.innerHTML = DOM.innerHTMLTransaction(transaction, index)
@@ -115,11 +141,11 @@ const DOM = {
 
         const html = `
          
-         <td class="description">${transaction.description}</td>
+         <td id="tb_description" class="description">${transaction.description}</td>
          <td class= "${CSSclass}">${amount}</td>
          <td class="date">${transaction.date}</td>
          <td>
-             <img onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover Transação">
+             <img id="remove" onclick="Form.removeTrasaction(${index})" src="./assets/minus.svg" alt="Remover Transação">
          </td>
      `
         return html
@@ -137,16 +163,34 @@ const DOM = {
             .innerHTML = Utils.formatCurrency(Transaction.total())
     },
 
+    negativeTotal() {
+
+        var total = Transaction.total()
+        if (total < 0) {
+            document
+                .querySelector('.total')
+                .classList
+                .add('negative')
+        } else {
+            document
+                .querySelector('.total')
+                .classList
+                .remove('negative')
+        }
+
+    },
+
     clearTransactions() {
         DOM.transactionsContainer.innerHTML = ""
     }
+
 }
 
 const Utils = {
     formatAmount(value) {
-        value = Number(value) * 100
+        value = value * 100
 
-        return value
+        return Math.round(value)
     },
 
     formatDate(date) {
@@ -191,6 +235,21 @@ const Form = {
             amount.trim() === "" ||
             date.trim() === "") {
             throw new Error("Por favor, preencha todos os campos")
+        }
+
+    },
+
+    removeTrasaction(index) {
+
+        /* var description = index(document.getElementById('tb_description').innerHTML);
+        console.log("Encontrou o " + description) */
+
+        var resultado = confirm("Deseja excluir essa transação ?");
+        if (resultado == true) {
+            Transaction.remove(index)
+            alert("Transação foi excluída da tabela!");
+        } else {
+            alert("Você desistiu de excluir a transação da tabela!");
         }
     },
 
@@ -251,11 +310,15 @@ const Form = {
 const App = {
     init() {
 
+        DOM.wallpaperTransformation()
+
         Transaction.all.forEach(DOM.addTransaction)
 
         DOM.updateBalance()
 
         Storage.set(Transaction.all)
+
+        DOM.negativeTotal()
 
     },
 
@@ -265,5 +328,5 @@ const App = {
     },
 }
 
-App.init()
 
+App.init()
