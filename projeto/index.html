@@ -6,9 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>dev.finance$</title>
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@600&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -17,6 +21,7 @@
         <div class="wallpaper">
             <img src="./assets/logo.svg" alt="Logo Dev Finance">
         </div>
+
     </header>
 
     <main class="container">
@@ -47,9 +52,10 @@
         </section>
         <section id="transaction">
             <h2 class="sr-only">Transações</h2>
-
-            <a href="#" onclick="Modal.open()" class="button new"> Nova Transação</a>
-
+            <div class="button-transac">
+                <img onclick="Modal.open()" class="button new" src="./assets/plus.svg" alt="Nova Transação">
+                <h2>Nova Transação</h2>
+            </div>
             <table id="data-table">
                 <thead>
                     <tr>
@@ -88,11 +94,9 @@
                         <input type="date" id="date" name="date">
                     </div>
 
-                    <div class="input-group actions">
-                        <a onclick="Modal.close()" href="#" class="button cancel">Cancelar</a>
-                        <button>Salvar</button>
-                    </div>
+                    <div class="input-group actions" id="save">
 
+                    </div>
                 </form>
             </div>
         </div>

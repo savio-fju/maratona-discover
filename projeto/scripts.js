@@ -1,16 +1,16 @@
 const Modal = {
     open() {
-        console.log('open transaction')
-        document
-            .querySelector('.modal-overlay')
-            .classList
-            .add('active')
+        document.querySelector('.modal-overlay').classList.add('active')
+
+        let bntSave = document.getElementById('save')
+        let html = `<a onclick="Modal.close()" href="#" class="button cancel">Cancelar</a>
+                    <button id="save">Salvar</button>`
+        bntSave.innerHTML = html
     },
     close() {
-        document
-            .querySelector('.modal-overlay')
-            .classList
-            .remove('active')
+        document.querySelector('.modal-overlay').classList.remove('active')
+
+        Form.clearFields()
     }
 }
 
@@ -26,29 +26,8 @@ const Storage = {
     }
 }
 
-//função toogle para substituir a primeira função de add/remove
 const Transaction = {
     all: Storage.get(),
-
-    /* [
-        {
-            description: 'Luz',
-            amount: -50000,
-            date: '23/01/2021',
-        },
-
-        {
-            description: 'Website',
-            amount: 500000,
-            date: '23/01/2021',
-        },
-
-        {
-            description: 'Internet',
-            amount: -20000,
-            date: '23/01/2021',
-        }
-    ] */
 
     add(transaction) {
         Transaction.all.push(transaction)
@@ -102,30 +81,6 @@ const Transaction = {
 const DOM = {
     transactionsContainer: document.querySelector('#data-table tbody'),
 
-    wallpaperTransformation() {
-        var currentTime = new Date().getHours();
-        console.log(currentTime);
-        if (6 <= currentTime && currentTime < 8) {
-            document.querySelector('.wallpaper').classList.add('amanhecer');
-
-        } else if (8 >= currentTime && currentTime < 16) {
-            document.querySelector('.wallpaper').classList.add('dia');
-
-        } else if (16 >= currentTime && currentTime < 18) {
-            document.querySelector('.wallpaper').classList.add('por-do-sol');
-
-        } else if (18 >= currentTime && currentTime < 19) {
-            document.querySelector('.wallpaper').classList.add('anoitecer');
-
-        } else if (19 <= currentTime && currentTime < 23) {
-            document.querySelector('.wallpaper').classList.add('noite');
-
-        } else if (0 <= currentTime && currentTime < 6) {
-            document.querySelector('.wallpaper').classList.add('noite');
-
-        }
-
-    },
     addTransaction(transaction, index) {
         const tr = document.createElement('tr')
         tr.innerHTML = DOM.innerHTMLTransaction(transaction, index)
@@ -144,8 +99,9 @@ const DOM = {
          <td id="tb_description" class="description">${transaction.description}</td>
          <td class= "${CSSclass}">${amount}</td>
          <td class="date">${transaction.date}</td>
-         <td>
-             <img id="remove" onclick="Form.removeTrasaction(${index})" src="./assets/minus.svg" alt="Remover Transação">
+         <td class="button-td">
+            <img id="remove" onclick="Form.removeTransaction(${index})" src="./assets/minus.svg" alt="Remover Transação">
+            <img id="edit" onclick="DOM.editTransaction(${index})" src="./assets/edit.png" alt="Botão Editar">
          </td>
      `
         return html
@@ -176,6 +132,71 @@ const DOM = {
                 .querySelector('.total')
                 .classList
                 .remove('negative')
+        }
+
+    },
+
+    editTransaction(transaction, index) {
+        Modal.open()
+
+        linha = Transaction.all;
+
+        description = linha[transaction].description
+        amount = linha[transaction].amount
+        date = linha[transaction].date
+
+        amount = amount / 100
+
+        document.getElementById('description').value = description
+        document.getElementById('amount').value = amount
+        document.getElementById('date').value = date
+
+        DOM.addNewBtn()
+    },
+
+    addNewBtn() {
+
+        let bntSave = document.getElementById('save')
+
+        let html = `<a onclick="Modal.close()" href="#" class="button cancel">Cancelar</a>
+                    <button id="save" onclick="DOM.save()">Salvar</button>`
+
+        bntSave.innerHTML = html
+
+    },
+
+    save(index) {
+        Transaction.remove(index)
+
+        let bntSave = document.getElementById('save')
+
+        let html = `<a onclick="Modal.close()" href="#" class="button cancel">Cancelar</a>
+                    <button id="save" onclick="DOM.save()">Salvar</button>`
+
+        bntSave.innerHTML = html
+    },
+
+    wallpaperTransformation() {
+        var currentTime = new Date().getHours();
+        console.log(currentTime);
+        if (6 <= currentTime && currentTime < 8) {
+            document.querySelector('.wallpaper').classList.add('amanhecer');
+
+        } else if (8 <= currentTime && currentTime < 16) {
+            document.querySelector('.wallpaper').classList.add('dia');
+
+        } else if (16 <= currentTime && currentTime < 18) {
+            document.querySelector('.wallpaper').classList.add('por-do-sol');
+
+        } else if (18 <= currentTime && currentTime < 19) {
+            document.querySelector('.wallpaper').classList.add('anoitecer');
+
+        } else if (19 <= currentTime && currentTime < 23) {
+            document.querySelector('.wallpaper').classList.add('noite');
+
+        } else if (0 <= currentTime && currentTime < 6) {
+            document.querySelector('.wallpaper').classList.add('noite');
+
         }
 
     },
@@ -239,10 +260,7 @@ const Form = {
 
     },
 
-    removeTrasaction(index) {
-
-        /* var description = index(document.getElementById('tb_description').innerHTML);
-        console.log("Encontrou o " + description) */
+    removeTransaction(index) {
 
         var resultado = confirm("Deseja excluir essa transação ?");
         if (resultado == true) {
@@ -252,6 +270,7 @@ const Form = {
             alert("Você desistiu de excluir a transação da tabela!");
         }
     },
+
 
     formatValues() {
         let { description, amount, date } = Form.getValues()
@@ -296,13 +315,9 @@ const Form = {
             // modal feche
             Modal.close()
 
-
         } catch (error) {
             alert(error.message)
         }
-
-
-
 
     }
 }

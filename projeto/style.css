@@ -80,6 +80,12 @@ button:hover {
 .button.new {
     display: inline-block;
     margin-bottom: .8rem;
+    cursor: pointer;
+}
+
+.button.new:hover {
+    opacity: 0.8;
+    visibility: visible;
 }
 
 .button.cancel {
@@ -97,18 +103,25 @@ button:hover {
     opacity: 1;
 }
 
+.button-td {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-td #remove {
+    padding: 0rem 0.5rem;
+}
+
+.button-td #edit {
+    padding: 0rem 0.5rem;
+}
+
 
 /* Header ===================== */
 
-
-/* header {
-    background: #12a454;
-    padding: 2rem 0 13rem;
-    text-align: center;
-} */
-
 header .amanhecer {
-    background-image: url("./assets/wallpaper-amanhecer.webp");
+    background-image: url("./assets/wallpaper-amanhecer.jpg");
     background-repeat: no-repeat;
     background-position: initial;
     background-size: cover;
@@ -117,7 +130,7 @@ header .amanhecer {
 }
 
 header .dia {
-    background-image: url("./assets/wallpaper-dia.webp");
+    background-image: url("./assets/wallpaper-dia.jpg");
     background-repeat: no-repeat;
     background-position: initial;
     background-size: cover;
@@ -135,7 +148,7 @@ header .por-do-sol {
 }
 
 header .anoitecer {
-    background-image: url("./assets/wallpaper-anoitecer.webp");
+    background-image: url("./assets/wallpaper-anoitecer.jpg");
     background-repeat: no-repeat;
     background-position: initial;
     background-size: cover;
@@ -144,7 +157,7 @@ header .anoitecer {
 }
 
 header .noite {
-    background-image: url("./assets/wallpaper-noite.webp");
+    background-image: url("./assets/wallpaper-noite.jpg");
     background-repeat: no-repeat;
     background-position: initial;
     background-size: cover;
@@ -161,7 +174,7 @@ header .noite {
 /* Balance ===================== */
 
 #balance {
-    margin-top: -8rem;
+    margin-top: -4rem;
 }
 
 #balance h2 {
@@ -211,6 +224,22 @@ header .noite {
     display: block;
     width: 100%;
     overflow-x: auto;
+}
+
+.button-transac {
+    padding: 1rem 1rem;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.button-transac h2 {
+    margin-top: -0.2rem;
+    position: initial;
+    left: 9%;
+    color: #12a454;
+    font-size: 19px;
 }
 
 #data-table {
@@ -288,11 +317,16 @@ td.expense {
 }
 
 .modal {
-    background: #f0f2f5;
-    padding: 2.4rem;
-    width: 90%;
-    max-width: 500px;
-    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    padding: 2rem;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.856);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+    border-radius: 10px;
 }
 
 
@@ -302,33 +336,60 @@ td.expense {
     max-width: 500px;
 }
 
-#form h2 {
-    margin-top: 0;
+.modal #form h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: rgb(0, 0, 0);
+    text-align: center;
 }
 
-input {
+.modal input {
     border: nome;
     border-radius: 0.2rem;
     padding: 0.8rem;
     width: 100%;
 }
 
-.input-group {
+.modal .input-group {
     margin-top: 0.8rem;
 }
 
-.input-group .help {
-    opacity: 0.4;
+.modal .input-group input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    outline: none;
+    background: transparent;
 }
 
-.input-group.actions {
+.modal .input-group label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    pointer-events: none;
+    transition: .5s;
+}
+
+.modal .input-group .help {
+    opacity: 0.4;
+    color: rgb(0, 0, 0);
+}
+
+.modal .input-group.actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.input-group.actions .button,
-.input-group.actions button {
+.modal .input-group.actions .button,
+.modal .input-group.actions button {
     width: 48%;
 }
 
@@ -374,4 +435,11 @@ footer p img:hover {
         grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
     }
+    .button-transac {
+        width: 27%;
+        padding: 1rem 1rem;
+    }
+    /* .button-transac h2 {
+        font-size: 20px;
+    } */
 }
