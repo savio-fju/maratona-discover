@@ -3,9 +3,41 @@
 :root {
     --dark-blue: #363f5f;
     --green: #49aa26;
+    --dark-green: #12a454;
     --light-green: #3dd705;
     --red: #e92929;
+    --white: #fff;
+    --background: #fdfbfb;
+    --border-before: #D3D3BE;
+    --border-before-clicked: #12a454;
 }
+
+.dark-mode:root {
+    --dark-blue: #dee2e6;
+    --green: #49aa26;
+    --dark-green: #3cc368;
+    --light-green: #3dd705;
+    --red: #e92929;
+    --white: #899095;
+    --background: #212529;
+    --border-before: #D3D3BE;
+    --border-before-clicked: #12a454;
+}
+
+
+/* 
+root {
+    --dark-blue: #363f5f;
+    --green: #49aa26;
+    --dark-green: #12a454;
+    --light-green: #3dd705;
+    --red: #e92929;
+    --white: #fff;
+    --body-bg: #212529;
+    --body-color: #899095;
+    --link-color: #dee2e6;
+    --link-color-hover: #3cc368;
+} */
 
 * {
     margin: 0;
@@ -19,7 +51,7 @@ html {
 }
 
 body {
-    background: #f0f2f5;
+    background: var(--background);
     font-family: 'Poppins', sans-serif;
 }
 
@@ -66,7 +98,7 @@ button {
     width: 100%;
     height: 50px;
     border: none;
-    color: white;
+    color: var(--white);
     background: var(--green);
     padding: 0;
     border-radius: 0.25rem;
@@ -74,7 +106,11 @@ button {
 }
 
 button:hover {
-    background: var(--light-green);
+    opacity: 0.8;
+}
+
+#save {
+    color: var(--background);
 }
 
 .button.new {
@@ -114,7 +150,57 @@ button:hover {
 }
 
 .button-td #edit {
-    padding: 0rem 0.5rem;
+    width: 28px;
+    height: 28px;
+}
+
+.button-mode-dark {
+    display: flex;
+    position: absolute;
+    margin-top: -15rem;
+    left: 85%;
+}
+
+.chkbx input[type="checkbox"] {
+    display: none;
+}
+
+.chkbx {
+    position: absolute;
+    cursor: pointer;
+}
+
+.x {
+    display: block;
+    width: 95px;
+    height: 37px;
+    border: 2px solid var(--border-before);
+    border-radius: 60px;
+    transition: .5s;
+}
+
+.x:before {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 4px;
+    left: 7px;
+    box-sizing: border-box;
+    background: var(--border-before);
+    border: 2px solid var(--border-before);
+    border-radius: 40px;
+    transition: .5s;
+}
+
+:checked~.x:before {
+    background: var(--border-before-clicked);
+    border-color: var(--border-before-clicked);
+    transform: translatex(45px);
+}
+
+ :checked~.x {
+    border-color: var(--border-before-clicked);
 }
 
 
@@ -166,7 +252,7 @@ header .noite {
 }
 
 #logo {
-    color: white;
+    color: var(--white);
     font-weight: 100;
 }
 
@@ -178,7 +264,7 @@ header .noite {
 }
 
 #balance h2 {
-    color: white;
+    color: var(--dark-blue);
     margin-top: 0;
 }
 
@@ -186,7 +272,7 @@ header .noite {
 /* Card ===================== */
 
 .card {
-    background: white;
+    background: var(--white);
     padding: 1.5rem 2rem;
     border-radius: 0.25rem;
     margin-bottom: 2rem;
@@ -209,12 +295,12 @@ header .noite {
 
 .card.total {
     background: var(--green);
-    color: white;
+    color: var(--background);
 }
 
 .card.total.negative {
     background: var(--red);
-    color: white;
+    color: var(--background);
 }
 
 
@@ -228,7 +314,7 @@ header .noite {
 
 .button-transac {
     padding: 1rem 1rem;
-    width: 50%;
+    width: 35%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -238,14 +324,14 @@ header .noite {
     margin-top: -0.2rem;
     position: initial;
     left: 9%;
-    color: #12a454;
+    color: var(--dark-green);
     font-size: 19px;
 }
 
 #data-table {
     width: 100%;
     border-spacing: 0 0.5rem;
-    color: #969cb3;
+    color: var(--dark-blue);
 }
 
 table thead tr th:first-child,
@@ -259,7 +345,7 @@ table tbody tr td:last-child {
 }
 
 table thead th {
-    background: white;
+    background: var(--white);
     font-weight: normal;
     padding: 1rem 2rem;
     text-align: left;
@@ -274,7 +360,7 @@ table tbody tr:hover {
 }
 
 table tbody td {
-    background: white;
+    background: var(--white);
     padding: 1rem 2rem;
 }
 
@@ -287,11 +373,11 @@ td.description {
 }
 
 td.income {
-    color: #12a454;
+    color: var(--dark-green);
 }
 
 td.expense {
-    color: #e92929;
+    color: var(--red);
 }
 
 
@@ -323,7 +409,7 @@ td.expense {
     width: 400px;
     padding: 2rem;
     transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.856);
+    background: var(--background);
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
     border-radius: 10px;
@@ -339,7 +425,7 @@ td.expense {
 .modal #form h2 {
     margin: 0 0 30px;
     padding: 0;
-    color: rgb(0, 0, 0);
+    color: var(--dark-blue);
     text-align: center;
 }
 
@@ -358,7 +444,7 @@ td.expense {
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
-    color: rgb(0, 0, 0);
+    color: var(--dark-blue);
     margin-bottom: 30px;
     border: none;
     border-bottom: 1px solid rgb(0, 0, 0);
@@ -372,14 +458,14 @@ td.expense {
     left: 0;
     padding: 10px 0;
     font-size: 16px;
-    color: rgb(0, 0, 0);
+    color: var(--dark-blue);
     pointer-events: none;
     transition: .5s;
 }
 
 .modal .input-group .help {
     opacity: 0.4;
-    color: rgb(0, 0, 0);
+    color: var(--dark-blue);
 }
 
 .modal .input-group.actions {
@@ -411,7 +497,7 @@ footer h3 {
 
 footer img {
     opacity: 0.6;
-    color: white;
+    color: var(--white);
     width: 32px;
     height: 32px;
     margin-top: 1rem;
@@ -439,7 +525,4 @@ footer p img:hover {
         width: 27%;
         padding: 1rem 1rem;
     }
-    /* .button-transac h2 {
-        font-size: 20px;
-    } */
 }

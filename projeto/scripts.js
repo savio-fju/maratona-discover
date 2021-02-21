@@ -101,7 +101,7 @@ const DOM = {
          <td class="date">${transaction.date}</td>
          <td class="button-td">
             <img id="remove" onclick="Form.removeTransaction(${index})" src="./assets/minus.svg" alt="Remover Transação">
-            <img id="edit" onclick="DOM.editTransaction(${index})" src="./assets/edit.png" alt="Botão Editar">
+            <img id="edit" onclick="DOM.editTransaction(${index})" src="./assets/editar.svg" alt="Botão Editar">
          </td>
      `
         return html
@@ -151,29 +151,21 @@ const DOM = {
         document.getElementById('amount').value = amount
         document.getElementById('date').value = date
 
-        DOM.addNewBtn()
+        DOM.addNewBtn(transaction)
     },
 
-    addNewBtn() {
+    addNewBtn(transaction) {
 
         let bntSave = document.getElementById('save')
 
         let html = `<a onclick="Modal.close()" href="#" class="button cancel">Cancelar</a>
-                    <button id="save" onclick="DOM.save()">Salvar</button>`
-
+                    <button id="save" onclick="DOM.save(${transaction})">Salvar</button>`
         bntSave.innerHTML = html
 
     },
 
-    save(index) {
-        Transaction.remove(index)
-
-        let bntSave = document.getElementById('save')
-
-        let html = `<a onclick="Modal.close()" href="#" class="button cancel">Cancelar</a>
-                    <button id="save" onclick="DOM.save()">Salvar</button>`
-
-        bntSave.innerHTML = html
+    save(transaction) {
+        Transaction.remove(transaction)
     },
 
     wallpaperTransformation() {
@@ -191,7 +183,7 @@ const DOM = {
         } else if (18 <= currentTime && currentTime < 19) {
             document.querySelector('.wallpaper').classList.add('anoitecer');
 
-        } else if (19 <= currentTime && currentTime < 23) {
+        } else if (19 <= currentTime && currentTime < 24) {
             document.querySelector('.wallpaper').classList.add('noite');
 
         } else if (0 <= currentTime && currentTime < 6) {
@@ -206,6 +198,17 @@ const DOM = {
     }
 
 }
+
+const $html = document.querySelector('html')
+const $checkbox = document.querySelector('#chkbx')
+
+$checkbox.addEventListener('change', function() {
+    $html.classList.toggle('dark-mode')
+    document.querySelector('.wallpaper').classList.add('noite');
+
+})
+
+
 
 const Utils = {
     formatAmount(value) {
