@@ -158,7 +158,7 @@ button:hover {
     display: flex;
     position: absolute;
     margin-top: -15rem;
-    left: 85%;
+    left: 80%;
 }
 
 .chkbx input[type="checkbox"] {
@@ -318,14 +318,6 @@ header .noite {
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.button-transac h2 {
-    margin-top: -0.2rem;
-    position: initial;
-    left: 9%;
-    color: var(--dark-green);
-    font-size: 19px;
 }
 
 #data-table {
@@ -524,5 +516,8 @@ footer p img:hover {
     .button-transac {
         width: 27%;
         padding: 1rem 1rem;
+    }
+    .button-mode-dark {
+        left: 85%;
     }
 }
